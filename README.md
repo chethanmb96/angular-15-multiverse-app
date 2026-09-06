@@ -22,6 +22,19 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
+## Live Demo & GitHub Pages Deployment
+
+The application is configured for automatic deployment to GitHub Pages via GitHub Actions.
+
+- **Live URL**: [https://chethanmb96.github.io/angular-15-multiverse-app/](https://chethanmb96.github.io/angular-15-multiverse-app/)
+- **Workflow**: [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+
+### Enabling GitHub Pages in Repository Settings
+1. Go to your repository on GitHub: `https://github.com/chethanmb96/angular-15-multiverse-app`
+2. Navigate to **Settings** > **Pages**
+3. Under **Build and deployment** > **Source**, select **GitHub Actions**
+4. Push to `master` (or run the workflow manually from the **Actions** tab) to trigger the deployment.
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
