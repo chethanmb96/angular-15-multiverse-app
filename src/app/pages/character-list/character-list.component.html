@@ -1,0 +1,68 @@
+<div class="character-list-page">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-badge">⚡ Real-Time Multiverse Index</div>
+      <h1 class="hero-title">Explore Infinite Realities</h1>
+      <p class="hero-subtitle">
+        Browse, filter, and inspect over 800+ lifeforms across dimensions powered by the official Rick & Morty Public REST API.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter Component -->
+  <app-character-filter
+    [initialFilters]="currentFilters"
+    (filtersChange)="onFiltersChange($event)"
+  ></app-character-filter>
+
+  <!-- Loading Skeletons -->
+  <div *ngIf="loading" class="characters-grid">
+    <div *ngFor="let s of skeletonArray" class="skeleton-card">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-body">
+        <div class="skeleton-line title"></div>
+        <div class="skeleton-line short"></div>
+        <div class="skeleton-line medium"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State / Not Found -->
+  <div *ngIf="!loading && errorMessage" class="error-container">
+    <div class="error-icon">🛸</div>
+    <h3 class="error-title">Dimension Frequency Lost</h3>
+    <p class="error-text">{{ errorMessage }}</p>
+    <button type="button" class="retry-btn" (click)="fetchCharacters()">
+      ↻ Re-scan Frequency
+    </button>
+  </div>
+
+  <!-- Character Grid -->
+  <div *ngIf="!loading && !errorMessage && characters.length > 0" class="characters-grid">
+    <app-character-card
+      *ngFor="let char of characters"
+      [character]="char"
+      [isFavorite]="isFavorite(char.id)"
+      (cardClick)="openCharacterDetails($event)"
+      (toggleFavorite)="onToggleFavorite($event)"
+    ></app-character-card>
+  </div>
+
+  <!-- Pagination -->
+  <app-pagination
+    *ngIf="!loading && !errorMessage && pageInfo.pages > 1"
+    [currentPage]="currentFilters.page || 1"
+    [totalPages]="pageInfo.pages"
+    [totalItems]="pageInfo.count"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
+
+  <!-- Character Detail Modal -->
+  <app-character-detail-modal
+    [character]="selectedCharacter"
+    [isFavorite]="selectedCharacter ? isFavorite(selectedCharacter.id) : false"
+    (close)="closeCharacterDetails()"
+    (toggleFavorite)="onToggleFavorite($event)"
+  ></app-character-detail-modal>
+</div>

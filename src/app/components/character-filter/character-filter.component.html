@@ -1,0 +1,52 @@
+<div class="filter-panel" [formGroup]="filterForm">
+  <div class="search-input-wrapper">
+    <span class="search-icon">🔍</span>
+    <input
+      type="text"
+      formControlName="name"
+      placeholder="Search characters by name (e.g. Rick, Morty, Summer)..."
+      class="search-input"
+    />
+    <button
+      *ngIf="filterForm.get('name')?.value"
+      type="button"
+      class="clear-input-btn"
+      (click)="filterForm.get('name')?.setValue('')"
+      title="Clear search"
+    >
+      ✕
+    </button>
+  </div>
+
+  <div class="filter-controls">
+    <div class="select-group">
+      <label class="control-label">Status</label>
+      <select formControlName="status" class="filter-select">
+        <option *ngFor="let opt of statusOptions" [value]="opt.value">{{ opt.label }}</option>
+      </select>
+    </div>
+
+    <div class="select-group">
+      <label class="control-label">Species</label>
+      <select formControlName="species" class="filter-select">
+        <option *ngFor="let opt of speciesOptions" [value]="opt.value">{{ opt.label }}</option>
+      </select>
+    </div>
+
+    <div class="select-group">
+      <label class="control-label">Gender</label>
+      <select formControlName="gender" class="filter-select">
+        <option *ngFor="let opt of genderOptions" [value]="opt.value">{{ opt.label }}</option>
+      </select>
+    </div>
+
+    <button
+      type="button"
+      class="reset-btn"
+      (click)="resetFilters()"
+      title="Reset all filters"
+    >
+      ↺ Reset
+    </button>
+  </div>
+</div>

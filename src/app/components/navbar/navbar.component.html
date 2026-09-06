@@ -1,0 +1,62 @@
+<header class="navbar">
+  <div class="nav-container">
+    <a routerLink="/characters" class="brand-logo" (click)="closeMenu()">
+      <div class="portal-ring">
+        <span class="portal-core"></span>
+      </div>
+      <div class="brand-text">
+        <span class="brand-title">MULTIVERSE</span>
+        <span class="brand-badge">Angular 15</span>
+      </div>
+    </a>
+
+    <button class="mobile-toggle" (click)="toggleMenu()" aria-label="Toggle navigation">
+      <span class="hamburger" [class.open]="isMenuOpen"></span>
+    </button>
+
+    <nav class="nav-links" [class.open]="isMenuOpen">
+      <a
+        routerLink="/characters"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        (click)="closeMenu()"
+        class="nav-link"
+      >
+        <span class="link-icon">🪐</span>
+        Characters
+      </a>
+
+      <a
+        routerLink="/episodes"
+        routerLinkActive="active"
+        (click)="closeMenu()"
+        class="nav-link"
+      >
+        <span class="link-icon">📺</span>
+        Episodes
+      </a>
+
+      <a
+        routerLink="/favorites"
+        routerLinkActive="active"
+        (click)="closeMenu()"
+        class="nav-link fav-link"
+      >
+        <span class="link-icon">⭐</span>
+        Favorites
+        <span class="fav-badge" *ngIf="(favoritesCount$ | async) as count">
+          {{ count }}
+        </span>
+      </a>
+
+      <a
+        href="https://rickandmortyapi.com/documentation"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="nav-api-badge"
+      >
+        API Docs ↗
+      </a>
+    </nav>
+  </div>
+</header>

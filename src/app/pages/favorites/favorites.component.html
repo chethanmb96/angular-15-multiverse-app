@@ -1,0 +1,50 @@
+<div class="favorites-page">
+  <div class="fav-header">
+    <div class="header-text">
+      <h1 class="page-title">Saved Inhabitants</h1>
+      <p class="page-subtitle">Your personal multiverse roster saved in local browser storage.</p>
+    </div>
+
+    <button
+      *ngIf="(favorites$ | async)?.length"
+      type="button"
+      class="clear-btn"
+      (click)="onClearAll()"
+    >
+      🗑 Clear All Favorites
+    </button>
+  </div>
+
+  <ng-container *ngIf="(favorites$ | async) as favorites">
+    <!-- Grid of Favorites -->
+    <div *ngIf="favorites.length > 0" class="characters-grid">
+      <app-character-card
+        *ngFor="let char of favorites"
+        [character]="char"
+        [isFavorite]="true"
+        (cardClick)="openCharacterDetails($event)"
+        (toggleFavorite)="onRemoveFavorite($event)"
+      ></app-character-card>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="favorites.length === 0" class="empty-favorites">
+      <div class="empty-icon">⭐</div>
+      <h2 class="empty-title">Your Watchlist is Empty</h2>
+      <p class="empty-desc">
+        You haven't bookmarked any characters yet. Explore the multiverse and tap the heart icon on any character to save them here!
+      </p>
+      <a routerLink="/characters" class="explore-btn">
+        Explore Multiverse Characters
+      </a>
+    </div>
+  </ng-container>
+
+  <!-- Detail Modal -->
+  <app-character-detail-modal
+    [character]="selectedCharacter"
+    [isFavorite]="true"
+    (close)="closeCharacterDetails()"
+    (toggleFavorite)="onRemoveFavorite($event)"
+  ></app-character-detail-modal>
+</div>

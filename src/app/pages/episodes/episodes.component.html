@@ -1,0 +1,55 @@
+<div class="episodes-page">
+  <div class="episodes-header">
+    <div>
+      <h1 class="page-title">Broadcast Transmissions</h1>
+      <p class="page-subtitle">Chronological guide to all seasons and multiverse interdimensional cable runs.</p>
+    </div>
+
+    <div class="episode-search-wrapper">
+      <input
+        type="text"
+        [formControl]="searchControl"
+        placeholder="Filter by title (e.g. Pilot, Pickle, Citadel)..."
+        class="episode-search-input"
+      />
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="episodes-grid">
+    <div *ngFor="let i of [1,2,3,4,5,6]" class="skeleton-ep-card"></div>
+  </div>
+
+  <!-- Error / Empty State -->
+  <div *ngIf="!loading && errorMessage" class="episodes-error">
+    <span class="error-emoji">📺</span>
+    <h3>No Transmissions Found</h3>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Episodes Grid -->
+  <div *ngIf="!loading && !errorMessage && episodes.length > 0" class="episodes-grid">
+    <div *ngFor="let ep of episodes" class="episode-card">
+      <div class="card-top">
+        <span class="season-badge">{{ ep.episode }}</span>
+        <span class="air-date">{{ ep.air_date }}</span>
+      </div>
+
+      <h3 class="ep-title">{{ ep.name }}</h3>
+
+      <div class="card-bottom">
+        <span class="cast-count">👥 {{ ep.characters.length }} Characters</span>
+        <span class="ep-id">Entry #{{ ep.id }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <app-pagination
+    *ngIf="!loading && !errorMessage && totalPages > 1"
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    [totalItems]="totalCount"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
+</div>

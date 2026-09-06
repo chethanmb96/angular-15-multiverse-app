@@ -1,0 +1,60 @@
+<div class="pagination-container" *ngIf="totalPages > 1">
+  <div class="pagination-info">
+    Showing page <span class="highlight">{{ currentPage }}</span> of <span class="highlight">{{ totalPages }}</span>
+    <span *ngIf="totalItems">({{ totalItems }} total)</span>
+  </div>
+
+  <div class="pagination-nav">
+    <button
+      type="button"
+      class="page-btn nav-btn"
+      [disabled]="currentPage === 1"
+      (click)="goToPage(1)"
+      title="First Page"
+    >
+      ««
+    </button>
+
+    <button
+      type="button"
+      class="page-btn nav-btn"
+      [disabled]="currentPage === 1"
+      (click)="goToPage(currentPage - 1)"
+      title="Previous Page"
+    >
+      ‹
+    </button>
+
+    <div class="pages-list">
+      <button
+        *ngFor="let page of visiblePages"
+        type="button"
+        class="page-btn num-btn"
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)"
+      >
+        {{ page }}
+      </button>
+    </div>
+
+    <button
+      type="button"
+      class="page-btn nav-btn"
+      [disabled]="currentPage === totalPages"
+      (click)="goToPage(currentPage + 1)"
+      title="Next Page"
+    >
+      ›
+    </button>
+
+    <button
+      type="button"
+      class="page-btn nav-btn"
+      [disabled]="currentPage === totalPages"
+      (click)="goToPage(totalPages)"
+      title="Last Page"
+    >
+      »»
+    </button>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="modal-backdrop" *ngIf="character" (click)="onClose()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <button type="button" class="close-btn" (click)="onClose()" aria-label="Close modal">✕</button>
+
+    <div class="modal-header">
+      <div class="character-avatar-wrap">
+        <img [src]="character.image" [alt]="character.name" class="modal-avatar" />
+        <span class="status-indicator-badge" [ngClass]="character.status | statusColor">
+          {{ character.status }}
+        </span>
+      </div>
+
+      <div class="modal-title-area">
+        <h2 class="modal-name">{{ character.name }}</h2>
+        <div class="modal-sub">
+          <span class="spec-tag">{{ character.species }}</span>
+          <span class="spec-tag" *ngIf="character.type">{{ character.type }}</span>
+          <span class="spec-tag gender-tag">{{ character.gender }}</span>
+        </div>
+
+        <button
+          type="button"
+          class="modal-fav-action"
+          [class.active]="isFavorite"
+          (click)="onToggleFavorite()"
+        >
+          <span class="heart-icon">♥</span>
+          {{ isFavorite ? 'In Favorites' : 'Add to Favorites' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">📍</div>
+          <div class="info-content">
+            <span class="info-label">Last Known Location</span>
+            <span class="info-value">{{ character.location.name }}</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">🌍</div>
+          <div class="info-content">
+            <span class="info-label">Origin Planet / Dimension</span>
+            <span class="info-value">{{ character.origin.name }}</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">🆔</div>
+          <div class="info-content">
+            <span class="info-label">Multiverse Database ID</span>
+            <span class="info-value">#{{ character.id }}</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">📅</div>
+          <div class="info-content">
+            <span class="info-label">Database Entry Created</span>
+            <span class="info-value">{{ character.created | date:'mediumDate' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="episodes-section">
+        <h3 class="episodes-title">
+          <span>Featured Episodes</span>
+          <span class="badge-count">{{ character.episode.length }} appearances</span>
+        </h3>
+
+        <div *ngIf="loadingEpisodes" class="episodes-loading">
+          <div class="spinner"></div>
+          <span>Teleporting episode logs...</span>
+        </div>
+
+        <div *ngIf="!loadingEpisodes && episodes.length > 0" class="episodes-list">
+          <div *ngFor="let ep of episodes" class="episode-item">
+            <span class="ep-code">{{ ep.episode }}</span>
+            <span class="ep-name">{{ ep.name }}</span>
+            <span class="ep-date">{{ ep.air_date }}</span>
+          </div>
+        </div>
+
+        <div *ngIf="!loadingEpisodes && episodes.length === 0" class="no-episodes">
+          <span>Episode details unavailable.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
